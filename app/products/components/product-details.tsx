@@ -1,15 +1,18 @@
 "use client";
 
+import { CartContext } from "@/app/context/cart";
 import { calculateProductTotalPrice, formatCurrency } from "@/app/helpers/price";
+import Cart from "@/components/cart";
 import DeliveryInfo from "@/components/delivery-info";
 import DiscountBadge from "@/components/discount-badge";
 import ProductList from "@/components/product-list";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Prisma } from "@prisma/client";
 import { BikeIcon, ChevronLeftIcon, ChevronRightIcon, TimerIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface ProductDetailsProps {
     product: Prisma.ProductGetPayload<{
@@ -26,7 +29,17 @@ interface ProductDetailsProps {
   
 const ProductDetails = ({ product, complementaryProducts, }: ProductDetailsProps) => {
     const [quantity, setQuantity] = useState(1);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const { addProductToCart, products } = useContext(CartContext);
   
+    console.log(products);
+  
+    const handleAddToCartClick = () => {
+      addProductToCart(product, quantity);
+      setIsCartOpen(true);
+    };
+
     const handleIncreaseQuantityClick = () =>
       setQuantity((currentState) => currentState + 1);
     const handleDecreaseQuantityClick = () =>
@@ -37,6 +50,7 @@ const ProductDetails = ({ product, complementaryProducts, }: ProductDetailsProps
       });
   
     return (
+      <>
       <div className="relative z-50 mt-[-1.5rem] rounded-tl-3xl rounded-tr-3xl bg-white py-5">
         {/* RESTAURANTE */}
         <div className="flex items-center gap-[0.375rem] px-5">
@@ -96,38 +110,6 @@ const ProductDetails = ({ product, complementaryProducts, }: ProductDetailsProps
   
         {/* DADOS DA ENTREGA */}
         <div className="px-5">
-          {/* <Card className="mt-6 flex justify-around py-3"> */}
-            {/* CUSTO */}
-            {/* <div className="flex flex-col items-center"> */}
-              {/* <div className="flex items-center gap-1 text-muted-foreground"> */}
-                {/* <span className="text-xs">Entrega</span> */}
-                {/* <BikeIcon size={14} /> */}
-              {/* </div> */}
-              {/* 
-              {Number(product.restaurant.deliveryFee) > 0 ? 
-                ( <p className="text-xs font-semibold"> {formatCurrency(Number(product.restaurant.deliveryFee))} </p> )
-                 : ( <p className="text-xs font-semibold">Grátis</p> )
-              } 
-              */}
-            {/* </div> */}
-            {/* TEMPO */}
-            {/* <div className="flex flex-col items-center"> */}
-              {/* <div className="flex items-center gap-1 text-muted-foreground"> */}
-                {/* <span className="text-xs">Entrega</span> */}
-                {/* <TimerIcon size={14} /> */}
-              {/* </div> */}
-  
-              {/* 
-              {Number(product.restaurant.deliveryFee) > 0 ? 
-                ( <p className="text-xs font-semibold"> {formatCurrency(Number(product.restaurant.deliveryFee))} </p> )
-                 : ( <p className="text-xs font-semibold">Grátis</p> )
-              } 
-              */}
-              {/* <p className="text-xs font-semibold"> */}
-                {/* {product.restaurant.deliveryTimeMinutes} min */}
-              {/* </p> */}
-            {/* </div> */}
-          {/* </Card> */}
           <DeliveryInfo restaurant={product.restaurant} />
         </div>
   
@@ -142,9 +124,21 @@ const ProductDetails = ({ product, complementaryProducts, }: ProductDetailsProps
         </div>
 
         <div className="mt-6 px-5">
-          <Button className="w-full font-semibold">Adicionar à sacola</Button>
+          <Button className="w-full font-semibold" onClick={handleAddToCartClick} >
+            Adicionar à sacola
+          </Button>
         </div>
       </div>
+
+        <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+          <SheetContent className="w-[90vw]">
+            <SheetHeader>
+              <SheetTitle className="text-left">Sacola</SheetTitle>
+            </SheetHeader>
+            <Cart />
+          </SheetContent>
+        </Sheet>
+      </>
     );
 };
 

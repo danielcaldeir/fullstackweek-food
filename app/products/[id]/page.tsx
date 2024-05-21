@@ -40,6 +40,7 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
     // if (!product) {
     //   return notFound();
     // }
+    console.log("Juices: "+juices);
   
     return (
       <div>
@@ -47,7 +48,8 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
         <ProductImage product={product} />
   
         {/* TITULO E PREÇO */}
-        <ProductDetails product={product} complementaryProducts={juices} />
+        <ProductDetails product={product} />
+        {/* <ProductDetails product={product} complementaryProducts={juices} /> */}
       </div>
     );
 };

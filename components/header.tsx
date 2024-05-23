@@ -10,8 +10,6 @@ import { Separator } from "./ui/separator";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header = () => {
-  // const handleSignOutClick = () => {alert('Saindo')};
-  // const handleSignInClick = () => {alert('Entrando')};
   const { data } = useSession();
 
   const handleSignOutClick = () => signOut();
@@ -78,15 +76,6 @@ const Header = () => {
               </>
             )}
 
-              {/* <>
-                <div className="flex items-center justify-between pt-10">
-                  <h2 className="font-semibold">Olá. Faça seu login!</h2>
-                  <Button size="icon" onClick={handleSignInClick}>
-                    <LogInIcon />
-                  </Button>
-                </div>
-              </> */}
-
             <div className="py-6">
               <Separator />
             </div>
@@ -105,9 +94,12 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     className="w-full justify-start space-x-3 rounded-full text-sm font-normal"
+                    asChild
                   >
-                    <ScrollTextIcon size={16} />
-                    <span className="block">Meus Pedidos</span>
+                    <Link href="/my-orders">
+                      <ScrollTextIcon size={16} />
+                      <span className="block">Meus Pedidos</span>
+                    </Link>
                   </Button>
 
                   <Button

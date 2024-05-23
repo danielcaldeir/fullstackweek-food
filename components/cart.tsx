@@ -9,8 +9,18 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import { createOrder } from "@/app/actions/order";
+import { OrderStatus } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-const Cart = () => {
+interface CartProps {
+  // eslint-disable-next-line no-unused-vars
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const Cart = ({ setIsOpen }: CartProps) => {
+    const router = useRouter();
+
     const { products, subtotalPrice, totalPrice, totalDiscounts, clearCart } = useContext(CartContext);
     const [isSubmitLoading, setIsSubmitLoading] = useState(false);
     const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
@@ -38,9 +48,26 @@ const Cart = () => {
           user: {
             connect: { id: data.user.id },
           },
+          products: {
+            createMany: {
+              data: products.map((product) => ({
+                productId: product.id,
+                quantity: product.quantity,
+              })),
+            },
+          },
         });
   
         clearCart();
+        setIsOpen(false);
+
+        toast("Pedido finalizado com sucesso!", {
+          description: "Você pode acompanhá-lo na tela dos seus pedidos.",
+          action: {
+            label: "Meus Pedidos",
+            onClick: () => router.push("/my-orders"),
+          },
+        });
       } catch (error) {
         console.error(error);
       } finally {
@@ -98,7 +125,13 @@ const Cart = () => {
             </div>
 
             {/* FINALIZAR PEDIDO */}
-            <Button className="mt-6 w-full">Finalizar pedido</Button>
+            <Button 
+              className="mt-6 w-full" 
+              onClick={() => setIsConfirmDialogOpen(true)} 
+              disabled={isSubmitLoading}
+            >
+              Finalizar pedido
+            </Button>
 
           </>
           ) : (
@@ -120,13 +153,14 @@ const Cart = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel disabled={isConfirmDialogOpen}>
+              <AlertDialogCancel> Cancelar </AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleFinishOrderClick}
+                disabled={isSubmitLoading}
+              >
                 {isSubmitLoading && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Cancelar
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={handleFinishOrderClick}>
                 Finalizar
               </AlertDialogAction>
             </AlertDialogFooter>

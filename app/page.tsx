@@ -7,7 +7,6 @@ import Search from "@/components/search";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
 import { ChevronRightIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 const Home = async() => {

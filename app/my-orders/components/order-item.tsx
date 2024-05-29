@@ -48,8 +48,11 @@ const OrderItem = ({ order }: OrderItemProps) => {
   const handleRedoOrderClick = () => {
     for (const orderProduct of order.products) {
       addProductToCart({
-        product: { ...orderProduct.product, restaurant: order.restaurant },
-        quantity: orderProduct.quantity,
+        product: { 
+          ...orderProduct.product, 
+          restaurant: order.restaurant,
+          quantity: orderProduct.quantity,
+        },
       });
     }
 
@@ -119,7 +122,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
             variant="ghost"
             size="sm"
             className="text-xs text-primary"
-            disabled={order.status !== "COMPLETED"}
+            // disabled={order.status !== "COMPLETED"}
             onClick={handleRedoOrderClick}
           >
             Refazer pedido

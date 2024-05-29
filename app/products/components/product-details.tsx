@@ -5,7 +5,7 @@ import { calculateProductTotalPrice, formatCurrency } from "@/app/helpers/price"
 import Cart from "@/components/cart";
 import DeliveryInfo from "@/components/delivery-info";
 import DiscountBadge from "@/components/discount-badge";
-import ProductList from "@/components/product-list";
+// import ProductList from "@/components/product-list";
 import { 
   AlertDialog, 
   AlertDialogAction, 
@@ -17,10 +17,10 @@ import {
   AlertDialogTitle 
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+// import { Card } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Prisma } from "@prisma/client";
-import { BikeIcon, ChevronLeftIcon, ChevronRightIcon, TimerIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, } from "lucide-react";
 import Image from "next/image";
 import { useContext, useState } from "react";
 
@@ -49,7 +49,7 @@ const ProductDetails = ({
   
     console.log(products);
     const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
-      addProductToCart({ product, quantity, emptyCart });
+      addProductToCart({ product:{...product, quantity}, emptyCart });
       setIsCartOpen(true);
     };
   

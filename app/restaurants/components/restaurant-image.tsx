@@ -1,20 +1,53 @@
 "use client";
 
+// import { toggleFavoriteRestaurant } from "@/app/actions/restaurant";
+import { isRestaurantFavorited } from "@/app/helpers/restaurant";
+import useToggleFavoriteRestaurant from "@/app/hooks/use-toggle-favorite-restaurant";
 import { Button } from "@/components/ui/button";
-import { Restaurant } from "@prisma/client";
-import { ChevronLeftIcon, HeartIcon } from "lucide-react";
+import { Restaurant, UserFavoriteRestaurant } from "@prisma/client";
+import { ChevronLeftIcon, HeartIcon, HeartOffIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+// import { toast } from "sonner";
 
 interface RestaurantImageProps {
-    restaurant: Pick<Restaurant, "name" | "imageUrl">;
+    restaurant: Pick<Restaurant, "id" | "name" | "imageUrl">;
+    // restaurant: Restaurant;
+    userFavoriteRestaurants: UserFavoriteRestaurant[];
 }
 
-const RestaurantImage = ({ restaurant }: RestaurantImageProps) => {
+const RestaurantImage = ({ restaurant, userFavoriteRestaurants, }: RestaurantImageProps) => {
     const router = useRouter();
+    const { data } = useSession();
   
+    const isFavorite = isRestaurantFavorited(
+      restaurant.id,
+      userFavoriteRestaurants,
+    );
+
     const handleBackClick = () => router.back();
-  
+    const { handleFavoriteClick } = useToggleFavoriteRestaurant({
+      restaurantId: restaurant.id,
+      userId: data?.user.id,
+      restaurantIsFavorited: isFavorite,
+    });
+    
+    // const handleFavoriteClick = async () => {
+    //   // if (!userId) return;
+    //   if (!data?.user.id) return;
+    //   try {
+    //     await toggleFavoriteRestaurant(data?.user.id, restaurant.id);
+    //     toast.success(
+    //       isFavorite
+    //         ? "Restaurante removido dos favoritos."
+    //         : "Restaurante favoritado.",
+    //     );
+    //   } catch (error) {
+    //     toast.error("Erro ao favoritar restaurante.");
+    //   }
+    // };
+
     return (
       <div className="relative h-[250px] w-full">
         <Image
@@ -32,12 +65,18 @@ const RestaurantImage = ({ restaurant }: RestaurantImageProps) => {
           <ChevronLeftIcon />
         </Button>
   
+        {data?.user.id && (
         <Button
           size="icon"
-          className="absolute right-4 top-4 rounded-full bg-gray-700"
+          className={`absolute right-4 top-4 rounded-full bg-gray-700 ${isFavorite && 'bg-primary hover:bg-gray-700'}`}
+          onClick={handleFavoriteClick}
         >
-          <HeartIcon size={20} className="fill-white" />
+          {isFavorite && (<HeartIcon size={20} className="fill-white" />)}
+          {!isFavorite && (<HeartOffIcon size={20} className="fill-white" />)}
+          {/* <HeartIcon size={20} className="fill-white" /> */}
         </Button>
+        )}
+        
       </div>
     );
 };

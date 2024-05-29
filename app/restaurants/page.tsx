@@ -7,6 +7,10 @@
 // import RestaurantItem from "@/components/restaurant-item";
 import { Suspense } from "react";
 import Restaurants from "@/app/restaurants/components/restaurants";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/prisma";
+import Header from "@/components/header";
 
 // const Restaurants = () => {
 //     const searchParams = useSearchParams();
@@ -45,10 +49,22 @@ import Restaurants from "@/app/restaurants/components/restaurants";
 //     );
 // };
 
-const RestaurantsPage = () =>{
+const RestaurantsPage = async () =>{
+  const session = await getServerSession(authOptions);
+
+  const userFavoriteRestaurants = await db.userFavoriteRestaurant.findMany({
+    where: { 
+      userId: session?.user?.id 
+    },
+    include: {
+      restaurant: true,
+    },
+  });
+
   return (
     <Suspense>
-      <Restaurants />
+      {/* <Header /> */}
+      <Restaurants userFavoriteRestaurants={userFavoriteRestaurants}/>
     </Suspense>
   );
 }

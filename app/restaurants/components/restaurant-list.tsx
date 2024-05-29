@@ -1,5 +1,5 @@
 import { db } from "@/lib/prisma";
-import RestaurantItem from "@/components/restaurant-item";
+import RestaurantItem from "@/app/restaurants/components/restaurant-item";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 

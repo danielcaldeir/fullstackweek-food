@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import ProductItem from "@/components/product-item";
+import ProductItem from "@/app/products/components/product-item";
 import { db } from "@/lib/prisma";
 
 const RecommendedProductsPage = async () => {

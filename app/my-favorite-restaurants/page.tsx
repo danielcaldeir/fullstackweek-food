@@ -3,7 +3,7 @@ import { db } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import Header from "@/components/header";
-import RestaurantItem from "@/components/restaurant-item";
+import RestaurantItem from "@/app/restaurants/components/restaurant-item";
 
 const MyFavoriteRestaurants = async () => {
   const session = await getServerSession(authOptions);

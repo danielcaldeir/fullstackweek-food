@@ -1,5 +1,5 @@
 import { db } from "@/lib/prisma";
-import CategoryItem from "@/components/category-item";
+import CategoryItem from "@/app/categories/components/category-item";
 
 const CategoryList = async () => {
     const categories = await db.category.findMany({});

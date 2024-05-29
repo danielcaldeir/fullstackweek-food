@@ -1,8 +1,8 @@
-import CategoryList from "@/components/category-list";
+import CategoryList from "@/app/categories/components/category-list";
 import Header from "@/components/header";
-import ProductList from "@/components/product-list";
+import ProductList from "@/app/products/components/product-list";
 import PromoBanner from "@/components/promo-banner";
-import RestaurantList from "@/components/restaurant-list";
+import RestaurantList from "@/app/restaurants/components/restaurant-list";
 import Search from "@/components/search";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";

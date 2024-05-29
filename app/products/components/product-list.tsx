@@ -1,5 +1,5 @@
 import { db } from "@/lib/prisma";
-import ProductItem from "@/components/product-item";
+import ProductItem from "@/app/products/components/product-item";
 import { Prisma } from "@prisma/client";
 
 interface ProductListProps {

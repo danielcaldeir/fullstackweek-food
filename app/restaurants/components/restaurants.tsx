@@ -5,7 +5,7 @@ import { notFound, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { searchForRestaurants } from "@/app/restaurants/actions/search";
 import Header from "@/components/header";
-import RestaurantItem from "@/components/restaurant-item";
+import RestaurantItem from "@/app/restaurants/components/restaurant-item";
 
 interface RestaurantsProps {
   userFavoriteRestaurants: UserFavoriteRestaurant[];

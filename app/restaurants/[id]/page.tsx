@@ -4,8 +4,8 @@ import RestaurantImage from "@/app/restaurants/components/restaurant-image";
 import Image from "next/image";
 import { StarIcon } from "lucide-react";
 import DeliveryInfo from "@/components/delivery-info";
-import ProductList from "@/components/product-list";
-import CartBanner from "@/app/restaurants/components/cart-banner";
+import ProductList from "@/app/products/components/product-list";
+import CartBanner from "@/components/cart-banner";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 

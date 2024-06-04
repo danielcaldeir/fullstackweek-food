@@ -26,29 +26,35 @@ const fetch = async() => {
     },
   });
 
-  const getBurguersCategory = db.category.findFirst({
-    where: {
-      name: "Hambúrgueres",
-    },
-  });
+  // const getBurguersCategory = db.category.findFirst({
+  //   where: {
+  //     name: "Hambúrgueres",
+  //   },
+  // });
 
-  const getPizzasCategory = db.category.findFirst({
-    where: {
-      name: "Pizzas",
-    },
-  });
+  // const getPizzasCategory = db.category.findFirst({
+  //   where: {
+  //     name: "Pizzas",
+  //   },
+  // });
 
-  const [products, burguersCategory, pizzasCategory] = await Promise.all([
-    getProducts,
-    getBurguersCategory,
-    getPizzasCategory,
+  // const [products, burguersCategory, pizzasCategory] = await Promise.all([
+  //   getProducts,
+  //   getBurguersCategory,
+  //   getPizzasCategory,
+  // ]);
+
+  const [products, ] = await Promise.all([
+    getProducts
   ]);
 
-  return { products, burguersCategory, pizzasCategory };
+  // return { products, burguersCategory, pizzasCategory };
+  return { products };
 }
 
 const Home = async() => {
-  const { products, burguersCategory, pizzasCategory } = await fetch();
+  // const { products, burguersCategory, pizzasCategory } = await fetch();
+  const { products, } = await fetch();
 
     return (
       <main className="flex min-h-screen flex-col justify-normal ">
@@ -63,12 +69,12 @@ const Home = async() => {
         </div>
 
         <div className="px-5 pt-6">
-          <Link href={`/categories/${pizzasCategory?.id}/products`}>
+          {/* <Link href={`/categories/${pizzasCategory?.id}/products`}> */}
           <PromoBanner
             src="/promo-banner-01.png"
             alt="Até 30% de desconto em pizzas!"
           />
-          </Link>
+          {/* </Link> */}
         </div>
 
         <div className="space-y-4 pt-6">
@@ -85,12 +91,12 @@ const Home = async() => {
         </div>
 
         <div className="px-5 pt-6">
-          <Link href={`/categories/${burguersCategory?.id}/products`}>
+          {/* <Link href={`/categories/${burguersCategory?.id}/products`}> */}
           <PromoBanner
             src="/promo-banner-02.png"
             alt="A partir de R$17,90 em lanches"
           />
-          </Link>
+          {/* </Link> */}
         </div>
 
         <div className="space-y-4 py-6">

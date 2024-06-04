@@ -2,7 +2,8 @@
 
 import { calculateProductTotalPrice, formatCurrency } from "@/app/helpers/price";
 import { cn } from "@/lib/utils";
-import { Prisma, Product } from "@prisma/client";
+// import { Prisma, Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,6 +34,7 @@ interface ProductItemProps {
               src={product.imageUrl}
               alt={product.name}
               fill
+              sizes="100%"
               className="rounded-lg object-cover shadow-md"
             />
             {product.discountPercentage && (

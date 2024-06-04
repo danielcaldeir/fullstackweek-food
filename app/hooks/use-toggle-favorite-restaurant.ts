@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { UserFavoriteRestaurant } from "@prisma/client";
+// import { UserFavoriteRestaurant } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { toggleFavoriteRestaurant } from "@/app/actions/restaurant";
 

@@ -21,8 +21,8 @@ const CartBanner = ({ restaurant }: CartBannerProps) => {
   );
 
   const handleViewBag = () => {
-    setIsCartOpen(true);
-    console.log(isCartOpen);
+    setIsCartOpen(!isCartOpen);
+    // console.log(isCartOpen);
   }
 
   if (!restaurantHasProductsOnCart) return null;

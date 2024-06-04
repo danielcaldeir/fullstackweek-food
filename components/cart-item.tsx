@@ -16,7 +16,7 @@ const CartItem = ({ cartProduct }: CartItemProps) => {
       removeProductFromCart,
     } = useContext(CartContext);
   
-    console.log("CartItem");
+    // console.log("CartItem");
     
     const handleDecreaseQuantityClick = () =>
       decreaseProductQuantity(cartProduct.id);

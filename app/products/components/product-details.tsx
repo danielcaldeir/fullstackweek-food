@@ -5,7 +5,7 @@ import { calculateProductTotalPrice, formatCurrency } from "@/app/helpers/price"
 import Cart from "@/components/cart";
 import DeliveryInfo from "@/components/delivery-info";
 import DiscountBadge from "@/components/discount-badge";
-// import ProductList from "@/components/product-list";
+// import ProductList from "@/app/products/components/product-list";
 import { 
   AlertDialog, 
   AlertDialogAction, 
@@ -22,6 +22,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ChevronRightIcon, } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useContext, useState } from "react";
 
 interface ProductDetailsProps {
@@ -47,7 +48,7 @@ const ProductDetails = ({
 
     const { addProductToCart, products } = useContext(CartContext);
   
-    console.log(products);
+    // console.log(products);
     const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
       addProductToCart({ product:{...product, quantity}, emptyCart });
       setIsCartOpen(true);
@@ -93,9 +94,11 @@ const ProductDetails = ({
                 className="rounded-full object-cover"
               />
             </div>
+            <Link href={`/restaurants/${product.restaurant.id}`}>
             <span className="text-xs text-muted-foreground">
               {product.restaurant.name}
             </span>
+            </Link>
           </div>
     
           {/* NOME DO PRODUTO */}

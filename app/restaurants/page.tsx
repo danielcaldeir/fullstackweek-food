@@ -10,7 +10,7 @@ import Restaurants from "@/app/restaurants/components/restaurants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/prisma";
-// import Header from "@/components/header";
+import Header from "@/components/header";
 
 // const Restaurants = () => {
 //     const searchParams = useSearchParams();
@@ -63,7 +63,7 @@ const RestaurantsPage = async () =>{
 
   return (
     <Suspense>
-      {/* <Header /> */}
+      <Header />
       <Restaurants userFavoriteRestaurants={userFavoriteRestaurants}/>
     </Suspense>
   );

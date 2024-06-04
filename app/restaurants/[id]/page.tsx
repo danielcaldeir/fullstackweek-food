@@ -75,6 +75,7 @@ const RestaurantPage = async ({ params: { id } }: RestaurantPageProps) => {
               src={restaurant.imageUrl}
               alt={restaurant.name}
               fill
+              sizes="100%"
               className="rounded-full object-cover"
             />
           </div>
@@ -119,6 +120,7 @@ const RestaurantPage = async ({ params: { id } }: RestaurantPageProps) => {
       ))}
 
       <CartBanner restaurant={restaurant} />
+      {/* <CartBanner  /> */}
     </div>
   );
 };
